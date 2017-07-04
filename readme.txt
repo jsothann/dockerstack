@@ -5,9 +5,9 @@
 - Utilisation : 
 
 	1 - Créez un fichier .csv (séparé par des virgules) et ajoutez
-	    le au sein du répertoire : /home/dockeradmin.
+	    le au sein du répertoire : /home/$user.
 	
-	2 - Executez le script : ./deploy.sh
+	2 - Executez le script : ./deploy.sh (situé dans /home/$user/compose/)
 
 
 - Arborescence : 
