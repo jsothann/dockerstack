@@ -1,0 +1,41 @@
+db:
+    image: mariadb
+    environment:
+     - MYSQL_ROOT_PASSWORD=PASSWD
+     - MYSQL_DATABASE=docker
+    volumes:
+     - ../../DB/database:/var/lib/mysql
+    ports:
+     - DBPORT:3306
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  links:
+    - db
+  ports:
+    - PHMPORT:80
+nginx:
+   image: nginx
+   links:
+    - db
+    - php:default_php
+   ports:
+    - NGPORT:80
+    - NGPORS:8080
+   volumes:
+    - ../../users/default/html/80/:/usr/share/nginx/html/
+    - ../../users/default/html/8080/:/usr/share/nginx/www/
+    - ../../users/default/conf.d/nginx.conf:/nginx.conf
+   command: nginx -c /nginx.conf
+php:
+   image: jprjr/php-fpm
+   volumes:
+    - ../../users/default/html/80/:/srv/http
+varnish:
+  image: zenedith/varnish:1.1.0
+  ports:
+    - VHPORT:8080
+  links:
+    - nginx
+  environment:
+    XXX : 172.17.0.1
+    BACKEND_ENV_PORT: ZZZ
